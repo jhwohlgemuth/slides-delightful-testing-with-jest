@@ -1,4 +1,4 @@
-Keeping up with the Joneses
-===========================
+Delightful Testing with Jest
+============================
 
-[Presentation link](https://jhwohlgemuth.github.io/slides-keeping-up-with-the-joneses)
+[Presentation link](https://jhwohlgemuth.github.io/slides-delightful-testing-with-jest)
