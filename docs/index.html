@@ -55,7 +55,7 @@
 		<section id="agenda">
 			<h2>Agenda</h2>
 			<ol>
-				<li class="fragment fade-up">What is Jest?</li>
+				<li class="fragment fade-up">Jest...so what? big deal, who cares?</li>
 				<li class="fragment fade-up">The Jest API</li>
 				<li class="fragment fade-up">The Jest community</li>
 				<li class="fragment fade-up">Snapshot testing with Jest</li>
@@ -114,16 +114,226 @@
     <section id="facebook-hearts-jest">
         <h1>Facebook <span style="color:red;">❤</span> Jest</h1>
     </section>
+    <section id="jest-facts" data-menu-title="Jest the facts, ma'am" data-markdown>
+        #FACTS
+        > Jest the facts, ma'am
+        
+        - v0.1.0 released **May 14, 2014**
+        - Current version `===` **22.4**
+        - [16,669 Stars on GitHub](https://github.com/facebook/jest/stargazers)
+        - Does **NOT** support AMD (and [probably never will](https://github.com/facebook/jest/issues/17#issuecomment-202143284))
+        - Jest CLI has a built-in watch task
+    </section>
 </section>
 
 		<section>
-    <section id="jest-api">
-
+    <section id="jest-api" data-menu-title="The Jest API">
+        <h2>The Jest API</h2>
+        <blockquote>Much like every other test API</blockquote>
+        <ul>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/using-matchers.html">matchers</a> leverage expectations on output</li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> are groupings of <a href="https://facebook.github.io/jest/docs/en/using-matchers.html">matchers</a> for a specific use-case</li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> <i>can</i> be grouped in <a href="https://facebook.github.io/jest/docs/en/api.html#describename-fn">suites</a></li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> <i>can</i> be unit, regression, or integration(e2e) tests</li>
+        </ul>
+        <br/>
+        <br/>
+        <br/>
+        <h3 class="fragment">matchers < specs < suites</h3>
+    </section>
+    <section id="matchers" data-menu-title="Matchers">
+        <h3>Matchers</h3>
+        <pre><code class="js">
+    expect(42).toBe(42);
+    expect(9001).toBeGreaterThan(9000);
+    expect(undefined).toBeUndefined();
+    expect(null).toBeNull();
+    expect(true).toBeTruthy();
+    expect(false).toBeFalsy();
+    // and so much more
+        </code></pre>
+        <p><a href="https://facebook.github.io/jest/docs/en/expect.html">See the whole list</a></p>
+    </section>
+    <section id="specs" data-menu-title="Specs">
+        <h3>Specs</h3>
+        <pre><code class="js">
+    it('can be awesome', () => {
+        // matchers and stuff go here
+    });
+        </code></pre>
+        <pre><code class="js">
+    test('can be awesome', () => {
+        // matchers and stuff go here
+    });
+        </code></pre>
+    </section>
+    <section id="suites-setup" data-menu-title="Suites - setup">
+        <h3>Suites (setup)</h3>
+        <pre><code class="js">
+    describe('Some component', () => {
+        beforeAll(() => {
+            // run ONCE per suite (before ALL specs)
+        });
+        beforeEach(() => {
+            // run before EACH spec
+        });
+        /*
+            specs go here
+        */
+    });
+        </code></pre>
+    </section>
+    <section id="suites-teardown" data-menu-title="Suites - teardown">
+        <h3>Suites (teardown)</h3>
+        <pre><code class="js">
+    describe('Some component', () => {
+        afterAll(() => {
+            // run ONCE per suite (after ALL specs)
+        });
+        afterEach(() => {
+            // run after EACH spec
+        });
+        /*
+            specs go here
+        */
+    });
+        </code></pre>
+    </section>
+    <section id="async-testing" data-menu-title="Testing async code">
+        <h3><a href="https://facebook.github.io/jest/docs/en/asynchronous.html">Testing Asynchronous Code</a></h3>
+        <pre><code class="js">
+    const Promise = require('bluebird');
+        </code></pre>
+        <pre><code class="js">
+    // return a promise
+    it('can wait for promises to resolve', () => {
+        expect.assertions(1);
+        return Promise.resolve(9001).delay(1000).then(level => {
+            expect(level).toBeGreaterThan(9000);
+        });
+    });
+        </code></pre>
+        <pre><code class="js">
+    // async/await
+    it('can wait for promises to resolve', async () => {
+        expect.assertions(1);
+        const level = await Promise.resolve(9001).delay(1000);
+        expect(level).toBeGreaterThan(9000);
+    });
+        </code></pre>
     </section>
 </section>
 
 		
 		
+		<section>
+    <section id="visual-regression-testing" data-menu-title="Visual Regression Testing" data-markdown>
+        ##Visual Regression Testing
+        > with Jest and Puppeteer
+    </section>
+    <section id="ingredients" data-markdown>
+        ## Ingredients
+        - [Jest](https://facebook.github.io/jest/) - *Test framework*
+        - [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot) - *Jest plugin*
+        - [puppeteer](https://github.com/GoogleChrome/puppeteer) - *Headless Chrome Node API*
+        - [http-server](https://www.npmjs.com/package/http-server) - *Lightweight http server*
+    </section>
+    <section id="start-static-server" data-menu-title="Step 1 - Start static server">
+        <div>
+            <h3>Start static server</h3>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "server:start": "nohup http-server -p 1337 &"
+        }
+    }
+            </code></pre>
+        </div>
+    </section>
+    <section id="capture-screenshots" data-menu-title="Step 2 - Capture screenshots">
+        <div>
+            <h3>Capture Screenshots</h3>
+            <pre><code class="js">
+    // captureScreenshots.js
+    function captureScreenshots(options) {
+        return (async () => {
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.setViewport({width, height});
+            await page.goto(/* url */);
+            // perform action
+            await page.screenshot(/* path */);
+            browser.close();
+            return 'Capture Complete';
+        })();
+    }
+    captureScreenshots();
+            </code></pre>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "capture": "node captureScreenshots.js"
+        }
+    }
+            </code></pre>
+        </div>
+    </section>
+    <section id="write-tests" data-menu-title="Step 3 - Write tests">
+        <div>
+            <h3>Write tests</h3>
+            <pre class="stretch"><code class="js">
+  // add image snapshot matcher
+  const {toMatchImageSnapshot} = require('jest-image-snapshot');
+  expect.extend({toMatchImageSnapshot});
+            </code></pre>
+            <pre class="stretch"><code class="js">
+  // First run will save snapshots
+
+  // Second run will perform comparisons
+
+  describe('Your application', () => {
+      it('can be free of visual regressions', () => {
+          return images.each(image => {
+              expect(image).toMatchImageSnapshot();
+          });
+      });
+  });
+            </code></pre>
+        </div>
+    </section>
+    <section id="run-tests" data-menu-title="Step 4 - Run tests">
+        <div>
+            <h3>Run tests</h3>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "server:start": "nohup http-server -p 1337 &",
+            "precapture": "npm run server:start",
+            "capture": "node captureScreenshots",
+            "pretest": "npm run capture",
+            "test": "jest"
+        }
+    }
+            </code></pre>
+            <pre><code class="bash">
+    # from command line
+    npm test
+            </code></pre>
+        </div>
+    </section>
+    <section id="lather-rinse-repeat" data-menu-title="Step 5 - Lather, rinse, repeat" data-background-image="img/all-the-things.png">
+        <h2 style="color:#333;">Snapshot all the things</h2>
+        <h3 class="fragment" style="color:#333;">not really ;)</h3>
+        <br><br><br><br><br><br>
+    </section>
+    <section id="examples" data-markdown>
+        ### `#IRL` Examples
+        - [generator-omaha](https://github.com/omahajs/generator-omaha) - *Yeoman generator*
+        - [Voxelcss](https://voxelcss.js.org/) - *3D cubes*
+        - [snapsvg-hexagonal](https://github.com/jhwohlgemuth/snapsvg-hexagonal) - *Snap.svg plugin*
+    </section>
+</section>
+
 		<section id="references" data-background="img/web-surfing-time.gif">
 			<h3>References</h3>
 			<div style="padding:20px;background-color:rgba(0,0,0,0.8);border-radius:20px;">
@@ -132,6 +342,7 @@
 					<li><a href="https://github.com/jest-community/awesome-jest">awesome-jest list</a></li>
 					<li><a href="https://github.com/sapegin/jest-cheat-sheet">Jest cheatsheet</a></li>
 					<li><a href="https://github.com/americanexpress/jest-image-snapshot">jest-image-snapshot GitHub page</a></li>
+					<li><a href="https://www.linkedin.com/pulse/testing-software-makes-jason-wohlgemuth/">Testing software that makes software</a></li>
 					<li><a href="https://repl.it/">repl.it</a></li>
 					<li><a href="https://asciinema.org/">asciinema</a></li>
 				</ul>

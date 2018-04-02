@@ -1,0 +1,107 @@
+<section>
+    <section id="visual-regression-testing" data-menu-title="Visual Regression Testing" data-markdown>
+        ##Visual Regression Testing
+        > with Jest and Puppeteer
+    </section>
+    <section id="ingredients" data-markdown>
+        ## Ingredients
+        - [Jest](https://facebook.github.io/jest/) - *Test framework*
+        - [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot) - *Jest plugin*
+        - [puppeteer](https://github.com/GoogleChrome/puppeteer) - *Headless Chrome Node API*
+        - [http-server](https://www.npmjs.com/package/http-server) - *Lightweight http server*
+    </section>
+    <section id="start-static-server" data-menu-title="Step 1 - Start static server">
+        <div>
+            <h3>Start static server</h3>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "server:start": "nohup http-server -p 1337 &"
+        }
+    }
+            </code></pre>
+        </div>
+    </section>
+    <section id="capture-screenshots" data-menu-title="Step 2 - Capture screenshots">
+        <div>
+            <h3>Capture Screenshots</h3>
+            <pre><code class="js">
+    // captureScreenshots.js
+    function captureScreenshots(options) {
+        return (async () => {
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.setViewport({width, height});
+            await page.goto(/* url */);
+            // perform action
+            await page.screenshot(/* path */);
+            browser.close();
+            return 'Capture Complete';
+        })();
+    }
+    captureScreenshots();
+            </code></pre>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "capture": "node captureScreenshots.js"
+        }
+    }
+            </code></pre>
+        </div>
+    </section>
+    <section id="write-tests" data-menu-title="Step 3 - Write tests">
+        <div>
+            <h3>Write tests</h3>
+            <pre class="stretch"><code class="js">
+  // add image snapshot matcher
+  const {toMatchImageSnapshot} = require('jest-image-snapshot');
+  expect.extend({toMatchImageSnapshot});
+            </code></pre>
+            <pre class="stretch"><code class="js">
+  // First run will save snapshots
+
+  // Second run will perform comparisons
+
+  describe('Your application', () => {
+      it('can be free of visual regressions', () => {
+          return images.each(image => {
+              expect(image).toMatchImageSnapshot();
+          });
+      });
+  });
+            </code></pre>
+        </div>
+    </section>
+    <section id="run-tests" data-menu-title="Step 4 - Run tests">
+        <div>
+            <h3>Run tests</h3>
+            <pre><code class="json">
+    {
+        "scripts": {
+            "server:start": "nohup http-server -p 1337 &",
+            "precapture": "npm run server:start",
+            "capture": "node captureScreenshots",
+            "pretest": "npm run capture",
+            "test": "jest"
+        }
+    }
+            </code></pre>
+            <pre><code class="bash">
+    # from command line
+    npm test
+            </code></pre>
+        </div>
+    </section>
+    <section id="lather-rinse-repeat" data-menu-title="Step 5 - Lather, rinse, repeat" data-background-image="img/all-the-things.png">
+        <h2 style="color:#333;">Snapshot all the things</h2>
+        <h3 class="fragment" style="color:#333;">not really ;)</h3>
+        <br><br><br><br><br><br>
+    </section>
+    <section id="examples" data-markdown>
+        ### `#IRL` Examples
+        - [generator-omaha](https://github.com/omahajs/generator-omaha) - *Yeoman generator*
+        - [Voxelcss](https://voxelcss.js.org/) - *3D cubes*
+        - [snapsvg-hexagonal](https://github.com/jhwohlgemuth/snapsvg-hexagonal) - *Snap.svg plugin*
+    </section>
+</section>

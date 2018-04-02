@@ -1,5 +1,97 @@
 <section>
-    <section id="jest-api">
-
+    <section id="jest-api" data-menu-title="The Jest API">
+        <h2>The Jest API</h2>
+        <blockquote>Much like every other test API</blockquote>
+        <ul>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/using-matchers.html">matchers</a> leverage expectations on output</li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> are groupings of <a href="https://facebook.github.io/jest/docs/en/using-matchers.html">matchers</a> for a specific use-case</li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> <i>can</i> be grouped in <a href="https://facebook.github.io/jest/docs/en/api.html#describename-fn">suites</a></li>
+            <li class="fragment"><a href="https://facebook.github.io/jest/docs/en/api.html#testname-fn-timeout">specs</a> <i>can</i> be unit, regression, or integration(e2e) tests</li>
+        </ul>
+        <br/>
+        <br/>
+        <br/>
+        <h3 class="fragment">matchers < specs < suites</h3>
+    </section>
+    <section id="matchers" data-menu-title="Matchers">
+        <h3>Matchers</h3>
+        <pre><code class="js">
+    expect(42).toBe(42);
+    expect(9001).toBeGreaterThan(9000);
+    expect(undefined).toBeUndefined();
+    expect(null).toBeNull();
+    expect(true).toBeTruthy();
+    expect(false).toBeFalsy();
+    // and so much more
+        </code></pre>
+        <p><a href="https://facebook.github.io/jest/docs/en/expect.html">See the whole list</a></p>
+    </section>
+    <section id="specs" data-menu-title="Specs">
+        <h3>Specs</h3>
+        <pre><code class="js">
+    it('can be awesome', () => {
+        // matchers and stuff go here
+    });
+        </code></pre>
+        <pre><code class="js">
+    test('can be awesome', () => {
+        // matchers and stuff go here
+    });
+        </code></pre>
+    </section>
+    <section id="suites-setup" data-menu-title="Suites - setup">
+        <h3>Suites (setup)</h3>
+        <pre><code class="js">
+    describe('Some component', () => {
+        beforeAll(() => {
+            // run ONCE per suite (before ALL specs)
+        });
+        beforeEach(() => {
+            // run before EACH spec
+        });
+        /*
+            specs go here
+        */
+    });
+        </code></pre>
+    </section>
+    <section id="suites-teardown" data-menu-title="Suites - teardown">
+        <h3>Suites (teardown)</h3>
+        <pre><code class="js">
+    describe('Some component', () => {
+        afterAll(() => {
+            // run ONCE per suite (after ALL specs)
+        });
+        afterEach(() => {
+            // run after EACH spec
+        });
+        /*
+            specs go here
+        */
+    });
+        </code></pre>
+    </section>
+    <section id="async-testing" data-menu-title="Testing async code">
+        <h3><a href="https://facebook.github.io/jest/docs/en/asynchronous.html">Testing Asynchronous Code</a></h3>
+        <pre><code class="js">
+    const Promise = require('bluebird');
+        </code></pre>
+        <pre><code class="js">
+    // return a promise
+    it('can wait for promises to resolve', () => {
+        expect.assertions(1);
+        return Promise.resolve(9001).delay(1000).then(level => {
+            expect(level).toBeGreaterThan(9000);
+        });
+    });
+        </code></pre>
+        <pre><code class="js">
+    // async/await
+    it('can wait for promises to resolve', async () => {
+        expect.assertions(1);
+        const level = await Promise.resolve(9001).delay(1000);
+        expect(level).toBeGreaterThan(9000);
+    });
+        </code></pre>
     </section>
 </section>
