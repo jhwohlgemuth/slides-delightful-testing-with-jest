@@ -1,0 +1,51 @@
+<section>
+    <section id="snapshot-testing" data-menu-title="Snapshot testing" data-markdown>
+        ##Snapshot Testing
+        > Comparing serializable values
+    </section>
+    <section id="snapshot-details" data-menu-title="Some details" data-markdown>
+        ##details
+        > Before you snapshot deep-fried twinkies...
+
+        - Snapshots are saved to `__snapshots__` folder
+        - Snapshots are created on the "first pass"
+        - [Snapshots are updated manually](https://facebook.github.io/jest/docs/en/snapshot-testing.html#updating-snapshots)
+        - Snapshots should be commited alongside code changes
+        - [Snapshots should be deterministic](https://facebook.github.io/jest/docs/en/snapshot-testing.html#tests-should-be-deterministic)
+    </section>
+    <section id="snapshot-example" data-menu-title="Snapshot Example">
+        <h3>Example</h3>
+        <blockqoute>Adapted from <a href="http://lexx.thebruce.net/poem/monty.html">Monty Python & the Holy Grail</a></blockqoute>
+        <pre><code class="js">
+    const person = {
+        weight: 'same as a duck',
+        floatsInWater: true,
+        madeOfVerySmallRocks: false
+    };
+        </code></pre>
+        <div class="fragment">
+            <pre><code class="js">
+    // without snapshots
+    test('is she a witch', () => {
+        expect(person.weight).toEqual('same as duck');
+        expect(person.floatsInWater).toBeTruthy();
+        expect(person.madeOfVerySmallRocks).toBeFalsy();
+    });
+            </code></pre>
+        </div>
+        <div class="fragment">
+            <pre><code class="js">
+    // with snapshots
+    test('is she a witch', () => {
+        expect(person).toMatchSnapshot();
+    });
+            </code></pre>
+        </div>
+    </section>
+    <section id="react-hearts-snapshots">
+        <h1>Facebook <span style="color:red;">❤</span> React</h1>
+    </section>
+    <section id="react-hearts-snapshots">
+        <h1>React <span style="color:red;">❤</span> Snapshots</h1>
+    </section>
+</section>

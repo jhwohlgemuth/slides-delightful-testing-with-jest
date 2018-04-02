@@ -57,8 +57,8 @@
 			<ol>
 				<li class="fragment fade-up">Jest...so what? big deal, who cares?</li>
 				<li class="fragment fade-up">The Jest API</li>
-				<li class="fragment fade-up">The Jest community</li>
 				<li class="fragment fade-up">Snapshot testing with Jest</li>
+				<li class="fragment fade-up">Visual regression testing</li>
 			</ol>
 		</section>
 		<section>
@@ -102,7 +102,7 @@
     </section>
     <section id="jest-setup-in-action">
         <h3>Set-up in under a minute</h3>
-        <script src="https://asciinema.org/a/c8WQKC0PxzChKKsTp1FrG9WeD.js" id="asciicast-c8WQKC0PxzChKKsTp1FrG9WeD" async data-cols=150 data-rows=30></script>
+        <script src="https://asciinema.org/a/NDPBgOM80xoP1H2YmmPZKFYWH.js" id="asciicast-NDPBgOM80xoP1H2YmmPZKFYWH" async data-cols=150 data-rows=30></script>
         <p>Review: <a href="https://jhwohlgemuth.github.io/slides-developing-with-node/">Developing with Node.js</a></p>
     </section>
     <section id="jest-hearts-react">
@@ -117,7 +117,7 @@
     <section id="jest-facts" data-menu-title="Jest the facts, ma'am" data-markdown>
         #FACTS
         > Jest the facts, ma'am
-        
+
         - v0.1.0 released **May 14, 2014**
         - Current version `===` **22.4**
         - [16,669 Stars on GitHub](https://github.com/facebook/jest/stargazers)
@@ -224,8 +224,58 @@
     </section>
 </section>
 
-		
-		
+		<section>
+    <section id="snapshot-testing" data-menu-title="Snapshot testing" data-markdown>
+        ##Snapshot Testing
+        > Comparing serializable values
+    </section>
+    <section id="snapshot-details" data-menu-title="Some details" data-markdown>
+        ##details
+        > Before you snapshot deep-fried twinkies...
+
+        - Snapshots are saved to `__snapshots__` folder
+        - Snapshots are created on the "first pass"
+        - [Snapshots are updated manually](https://facebook.github.io/jest/docs/en/snapshot-testing.html#updating-snapshots)
+        - Snapshots should be commited alongside code changes
+        - [Snapshots should be deterministic](https://facebook.github.io/jest/docs/en/snapshot-testing.html#tests-should-be-deterministic)
+    </section>
+    <section id="snapshot-example" data-menu-title="Snapshot Example">
+        <h3>Example</h3>
+        <blockqoute>Adapted from <a href="http://lexx.thebruce.net/poem/monty.html">Monty Python & the Holy Grail</a></blockqoute>
+        <pre><code class="js">
+    const person = {
+        weight: 'same as a duck',
+        floatsInWater: true,
+        madeOfVerySmallRocks: false
+    };
+        </code></pre>
+        <div class="fragment">
+            <pre><code class="js">
+    // without snapshots
+    test('is she a witch', () => {
+        expect(person.weight).toEqual('same as duck');
+        expect(person.floatsInWater).toBeTruthy();
+        expect(person.madeOfVerySmallRocks).toBeFalsy();
+    });
+            </code></pre>
+        </div>
+        <div class="fragment">
+            <pre><code class="js">
+    // with snapshots
+    test('is she a witch', () => {
+        expect(person).toMatchSnapshot();
+    });
+            </code></pre>
+        </div>
+    </section>
+    <section id="react-hearts-snapshots">
+        <h1>Facebook <span style="color:red;">❤</span> React</h1>
+    </section>
+    <section id="react-hearts-snapshots">
+        <h1>React <span style="color:red;">❤</span> Snapshots</h1>
+    </section>
+</section>
+
 		<section>
     <section id="visual-regression-testing" data-menu-title="Visual Regression Testing" data-markdown>
         ##Visual Regression Testing
@@ -233,7 +283,7 @@
     </section>
     <section id="ingredients" data-markdown>
         ## Ingredients
-        - [Jest](https://facebook.github.io/jest/) - *Test framework*
+        - [Jest](https://facebook.github.io/jest/) - *Complete testing solution*
         - [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot) - *Jest plugin*
         - [puppeteer](https://github.com/GoogleChrome/puppeteer) - *Headless Chrome Node API*
         - [http-server](https://www.npmjs.com/package/http-server) - *Lightweight http server*
@@ -293,7 +343,7 @@
 
   describe('Your application', () => {
       it('can be free of visual regressions', () => {
-          return images.each(image => {
+          return images.forEach(image => {
               expect(image).toMatchImageSnapshot();
           });
       });
@@ -334,7 +384,7 @@
     </section>
 </section>
 
-		<section id="references" data-background="img/web-surfing-time.gif">
+		<section id="references" data-background="img/web-surfing-time.gif" data-background-size="contain">
 			<h3>References</h3>
 			<div style="padding:20px;background-color:rgba(0,0,0,0.8);border-radius:20px;">
 				<ul>
@@ -343,6 +393,9 @@
 					<li><a href="https://github.com/sapegin/jest-cheat-sheet">Jest cheatsheet</a></li>
 					<li><a href="https://github.com/americanexpress/jest-image-snapshot">jest-image-snapshot GitHub page</a></li>
 					<li><a href="https://www.linkedin.com/pulse/testing-software-makes-jason-wohlgemuth/">Testing software that makes software</a></li>
+					<li><a href="https://github.com/facebook/create-react-app/pull/250#issuecomment-237098619">A Note of Jest (from Facebook)</a></li>
+					<li><a href="https://facebook.github.io/jest/blog/2016/07/27/jest-14.html#why-snapshot-testing">Why snapshot testing</a></li>
+					<li><a href="https://benmccormick.org/2016/09/19/testing-with-jest-snapshots-first-impressions/">Testing with Jest Snapshots: First Impressions</a></li>
 					<li><a href="https://repl.it/">repl.it</a></li>
 					<li><a href="https://asciinema.org/">asciinema</a></li>
 				</ul>
