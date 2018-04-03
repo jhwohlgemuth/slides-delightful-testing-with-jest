@@ -222,6 +222,9 @@
     });
         </code></pre>
     </section>
+    <section id="try-it-out" data-menu-title="Try it out" data-markdown>
+        ##[Try it out!](https://repl.it/@JasonWohlgemuth/Delightful-Testing-with-Jest)
+    </section>
 </section>
 
 		<section>
@@ -251,8 +254,7 @@
         </code></pre>
         <div class="fragment">
             <pre><code class="js">
-    // without snapshots
-    test('is she a witch', () => {
+    test('is she a witch', () => { // without snapshots
         expect(person.weight).toEqual('same as duck');
         expect(person.floatsInWater).toBeTruthy();
         expect(person.madeOfVerySmallRocks).toBeFalsy();
@@ -261,8 +263,7 @@
         </div>
         <div class="fragment">
             <pre><code class="js">
-    // with snapshots
-    test('is she a witch', () => {
+    test('is she a witch', () => { // with snapshots
         expect(person).toMatchSnapshot();
     });
             </code></pre>

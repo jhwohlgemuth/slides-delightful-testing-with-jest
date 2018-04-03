@@ -25,8 +25,7 @@
         </code></pre>
         <div class="fragment">
             <pre><code class="js">
-    // without snapshots
-    test('is she a witch', () => {
+    test('is she a witch', () => { // without snapshots
         expect(person.weight).toEqual('same as duck');
         expect(person.floatsInWater).toBeTruthy();
         expect(person.madeOfVerySmallRocks).toBeFalsy();
@@ -35,8 +34,7 @@
         </div>
         <div class="fragment">
             <pre><code class="js">
-    // with snapshots
-    test('is she a witch', () => {
+    test('is she a witch', () => { // with snapshots
         expect(person).toMatchSnapshot();
     });
             </code></pre>
